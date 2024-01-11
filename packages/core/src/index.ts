@@ -131,28 +131,28 @@ export const registerIsland =
       if (!this._rootEl) return
       unmount(this._rootEl)
     }
-    ;(config.updated = function () {
+    config.updated = function () {
       this.render()
-    }),
-      (config.render = function () {
-        if (!this.component) return
-        const Component = components[this.component]
-        const rootEl = document
-          .getElementById(this.el.id)!
-          .querySelector('.phx-island_content')!
-        const children = rootEl.parentElement?.querySelector(
-          '.phx-island_children'
-        )?.innerHTML
-        this.updateData(rootEl)
-        if (this.children !== children) {
-          console.log(this.el.id, 'children updated')
-          render(this._rootEl, Component, {
-            dispatch: this.pushEvent,
-            store: this.$store,
-            children
-          })
-          this.children = children ?? ''
-        }
-      })
+    }
+    config.render = function () {
+      if (!this.component) return
+      const Component = components[this.component]
+      const rootEl = document
+        .getElementById(this.el.id)!
+        .querySelector('.phx-island_content')!
+      const children = rootEl.parentElement?.querySelector(
+        '.phx-island_children'
+      )?.innerHTML
+      this.updateData(rootEl)
+      if (this.children !== children) {
+        console.log(this.el.id, 'children updated')
+        render(this._rootEl, Component, {
+          dispatch: this.pushEvent,
+          store: this.$store,
+          children
+        })
+        this.children = children ?? ''
+      }
+    }
     return { [name]: config }
   }

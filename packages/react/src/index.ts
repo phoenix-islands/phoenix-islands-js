@@ -1,3 +1,1 @@
-export default function foo(str: string) {
-  return `Hello ${str}!`
-}
+export * from './register-react-islands.js'

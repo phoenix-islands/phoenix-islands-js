@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Your ORG (https://example.com)",
+  "author": "Phoenix Islands (https://example.com)",
   "repository": "https://github.com/phoenix-islands/phoenix-islands-js",
   "homepage": "https://github.com/phoenix-islands/phoenix-islands-js/tree/main/packages/react",
   "license": "MIT",
@@ -29,6 +29,20 @@
     "changelog.md",
     "readme.md"
   ],
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": "^16.8 || ^17.0 || ^18.0",
+    "react-dom": "^16.8 || ^17.0 || ^18.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite build --watch",
@@ -38,5 +52,15 @@
     "types": "tsc -d --emitDeclarationOnly --outDir ./dist && resolve-tspaths -o ./dist",
     "lint": "tsc --noEmit && eslint . --cache --cache-location ../../node_modules/.eslint",
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
+  },
+  "dependencies": {
+    "@nanostores/react": "^0.7.1",
+    "@phoenix-islands/core": "../core",
+    "html-react-parser": "^5.1.0",
+    "nanostore": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18"
   }
 }

@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Your ORG (https://github.com/phoenix-islands)",
+  "author": "Phoenix Islands (https://github.com/phoenix-islands)",
   "repository": "https://github.com/phoenix-islands/phoenix-islands-js",
   "homepage": "https://github.com/phoenix-islands/phoenix-islands-js/tree/main/packages/core",
   "license": "MIT",
