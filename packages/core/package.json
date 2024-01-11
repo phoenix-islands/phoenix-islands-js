@@ -1,6 +1,6 @@
 {
   "name": "@phoenix-islands/core",
-  "description": "A bare-bones template for shared utilities",
+  "description": "A library for creating islands of various frontend framework in Phoenix LiveView.",
   "version": "0.0.0-development",
   "publishConfig": {
     "access": "public"
