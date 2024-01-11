@@ -22,7 +22,7 @@ yarn add @phoenix-islands/react
 export const TestIsland = ({
   store,
   children,
-}: ReactIslandProps<{ a: (string | number | boolean | null)[] }>) => {
+}: ReactIslandProps<{ x: number }>) => {
   const data = useStore(store);
   const [counter, setCounter] = React.useState(0);
   React.useEffect(() => setCounter(data.x ?? 0), [data.x]);
@@ -77,7 +77,7 @@ end
   <.island
     id="1"
     component="TestIsland"
-    data={%{ "a" => [ 2 * @counter, "counter: #{@counter}", :test, rem(@counter, 2) == 0, nil, @counter / 3 * 1.0e-30 ] }}
+    data={%{ "x" => @counter }}
   >
     <div>
       <div>
