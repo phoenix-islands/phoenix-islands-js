@@ -24,16 +24,26 @@ export const TestIsland = ({
   children,
 }: ReactIslandProps<{ a: (string | number | boolean | null)[] }>) => {
   const data = useStore(store);
+  const [counter, setCounter] = React.useState(0);
+  React.useEffect(() => setCounter(data.x ?? 0), [data.x]);
   return (
     <>
       <div className="p-3 rounded">
         React Component 2 - {JSON.stringify(data)}{" "}
       </div>
+      <div>Client State: {counter}</div>
+      <button
+        onClick={() => {
+          setCounter(counter + 1);
+          props.dispatch("update", { counter: counter + 1 });
+        }}
+      >
+        Client +1
+      </button>}
       {children}
     </>
   );
 };
-)
 ```
 
 ### 2. Register the component with live-view hooks
@@ -43,7 +53,7 @@ import { registerReactIsland } from "@phoenix-islands/react";
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: { 
-    ...registerReactIsland({ Test, Test2, OverviewChart }),
+    ...registerReactIsland({ TestIsland }),
   },
 });
 ```
@@ -65,29 +75,15 @@ end
 
 ```elixir
   <.island
-    id="2"
-    component="Test2"
-    data={
-      %{
-        "a" => [
-          2 * @counter,
-          "counter: #{@counter}",
-          :test,
-          rem(@counter, 2) == 0,
-          nil,
-          @counter / 3 * 1.0e-30
-        ]
-      }
-    }
+    id="1"
+    component="TestIsland"
+    data={%{ "a" => [ 2 * @counter, "counter: #{@counter}", :test, rem(@counter, 2) == 0, nil, @counter / 3 * 1.0e-30 ] }}
   >
-    <div
-      class="align-center mb-4 flex flex-row justify-between rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-gray-800 dark:text-green-400"
-      role="alert"
-    >
+    <div>
       <div>
         [Live View] <span class="font-medium">Counter: <%= @counter %></span>
       </div>
-      <.button color="alternative" phx-click="incr">phx-click -1</.button>
+      <button phx-click="incr">phx-click -1</.button>
     </div>
   </.island>
 ```
