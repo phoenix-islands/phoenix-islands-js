@@ -5,7 +5,9 @@
     "dictionaries": [],
     "words": [
         "cachedir",
-        "doogu"
+        "doogu",
+        "nanostores",
+        "tspaths"
     ],
     "ignoreWords": [],
     "import": []

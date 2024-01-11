@@ -49,16 +49,11 @@ npm run build -w pkg1 -w pkg2 ...
 
 ## Packages
 
-This monorepo starter comes with the following packages:
 
-```
 | Package                             | Description                          | Version (click for changelog)                           |
 | :---------------------------------- | :----------------------------------- | :------------------------------------------------------ |
-| [js-lib](packages/js-lib)           | Template for shared utilities        | [v0.0.0-development](packages/js-lib/changelog.md)      |
-| [theme](packages/theme)             | Template for Bootstrap-powered theme | [v0.0.0-development](packages/theme/changelog.md)       |
-| [vite-plugin](packages/vite-plugin) | Template for Vite plugin             | [v0.0.0-development](packages/vite-plugin/changelog.md) |
-
-```
+| [core](packages/core)               | Based phoenix live-view hook logic   | [v0.0.0-development](packages/core/changelog.md)      |
+| [react](packages/react)             | React adatper                        | [v0.0.0-development](packages/react/changelog.md)       |
 
 ## License
 
