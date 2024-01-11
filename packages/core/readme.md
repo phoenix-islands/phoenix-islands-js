@@ -1,31 +1,9 @@
-# MyLib
+# Phoenix Islands
 
-Description for `js-lib`.
-
-## Install
-
-```bash
-npm i js-lib
-```
-
-Or
-
-```bash
-yarn add js-lib
-```
-
-## Usage
-
-```js
-import jslib from 'js-lib'
-
-const output = jslib('bar')
-```
-
-For a more comprehensive understanding of the Browser implementation, please refer to the file `index.html`, which contains the necessary code and configurations.
+**Phoenix Islands** is a library for creating islands of various frontend frameworks in Phoenix LiveView.
 
 ## License
 
 ![GitHub](https://img.shields.io/github/license/phoenix-islands/phoenix-islands-js)
 
-A project by [Stilearning](https://stilearning.com) &copy; 2023.
+A project by [Usage](https://www.usage.so) &copy; 2023.

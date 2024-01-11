@@ -1,6 +1,6 @@
 {
   "name": "phoenix-islands",
-  "description": "Library for creating islands of various frontend framework in Phoenix LiveView",
+  "description": "Library for creating islands of various frontend frameworks in Phoenix LiveView",
   "version": "0.0.0-development",
   "private": true,
   "author": "Phoenix Islands (https://example.com)",

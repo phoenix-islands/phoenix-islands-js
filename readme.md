@@ -4,7 +4,7 @@
 
 <!-- [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/phoenix-islands/phoenix-islands-js/Release?style=flat-square)](https://github.com/phoenix-islands/phoenix-islands-js/actions/workflows/release.yml) -->
 
-**Phoenix Islands** is a library for creating islands of various frontend framework in Phoenix LiveView.
+**Phoenix Islands** is a library for creating islands of various frontend frameworks in Phoenix LiveView.
 
 ## Features
 

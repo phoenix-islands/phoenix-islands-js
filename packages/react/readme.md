@@ -1,31 +1,41 @@
-# MyLib
+# @phoenix-islands/react
 
-Description for `js-lib`.
+**Phoenix Islands** is a library for creating islands of various frontend frameworks in Phoenix LiveView.
 
 ## Install
 
 ```bash
-npm i js-lib
+npm i @phoenix-islands/react
 ```
 
 Or
 
 ```bash
-yarn add js-lib
+yarn add @phoenix-islands/react
 ```
 
 ## Usage
 
-```js
-import jslib from 'js-lib'
-
-const output = jslib('bar')
+```tsx
+export const TestIsland = ({
+  store,
+  children,
+}: ReactIslandProps<{ a: (string | number | boolean | null)[] }>) => {
+  const data = useStore(store);
+  return (
+    <>
+      <div className="p-3 rounded">
+        React Component 2 - {JSON.stringify(data)}{" "}
+      </div>
+      {children}
+    </>
+  );
+};
+)
 ```
-
-For a more comprehensive understanding of the Browser implementation, please refer to the file `index.html`, which contains the necessary code and configurations.
 
 ## License
 
 ![GitHub](https://img.shields.io/github/license/phoenix-islands/phoenix-islands-js)
 
-A project by [Stilearning](https://stilearning.com) &copy; 2023.
+A project by [Usage](https://www.usage.so) &copy; 2023.
