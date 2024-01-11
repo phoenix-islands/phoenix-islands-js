@@ -17,6 +17,13 @@
 - **Output Formats**: Provides UMD, CommonJS, and ESM output formats for JavaScript packages.
 - **Live Playground**: Get a live playground environment ready to experiment with your code.
 
+## Packages
+
+| Package                             | Description                          | Version (click for changelog)                           |
+| :---------------------------------- | :----------------------------------- | :------------------------------------------------------ |
+| [core](packages/core)               | Based phoenix live-view hook logic   | [v0.0.0-development](packages/core/changelog.md)      |
+| [react](packages/react)             | React adapter                        | [v0.0.0-development](packages/react/changelog.md)       |
+
 ## Development
 
 To start a new project using Monorepo Starter, you can either **click the "Use this template"** button on GitHub or manually clone the repository. After cloning, navigate to the project directory and install the required dependencies using the following command:
@@ -27,7 +34,7 @@ npm i
 
 > This package is pure [ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) and requires Node.js `^12.22 || ^14.17 || >=16.10.0`
 
-## Available Commands
+### Available Commands
 
 Here are the available commands to manage and build the project:
 
@@ -46,14 +53,6 @@ Please note that you can add the `-w` or `--workspace` flag to target one or mor
 npm test -w pkgName
 npm run build -w pkg1 -w pkg2 ...
 ```
-
-## Packages
-
-
-| Package                             | Description                          | Version (click for changelog)                           |
-| :---------------------------------- | :----------------------------------- | :------------------------------------------------------ |
-| [core](packages/core)               | Based phoenix live-view hook logic   | [v0.0.0-development](packages/core/changelog.md)      |
-| [react](packages/react)             | React adatper                        | [v0.0.0-development](packages/react/changelog.md)       |
 
 ## License
 
