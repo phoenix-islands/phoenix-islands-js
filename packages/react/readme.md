@@ -19,6 +19,8 @@ yarn add @phoenix-islands/react
 ### 1. Create an island component
 
 ```tsx
+import { ReactIslandProps, useStore } from "@phoenix-islands/react";
+
 export const TestIsland = ({
   store,
   children,
@@ -50,6 +52,7 @@ export const TestIsland = ({
 
 ```tsx
 import { registerReactIsland } from "@phoenix-islands/react";
+
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: { 

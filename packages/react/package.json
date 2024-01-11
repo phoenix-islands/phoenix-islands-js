@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/react",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publishConfig": {
     "access": "public"
   },
