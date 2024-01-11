@@ -1,0 +1,42 @@
+{
+  "name": "@phoenix-islands/core",
+  "description": "A bare-bones template for shared utilities",
+  "version": "0.0.0-development",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Your ORG (https://github.com/phoenix-islands)",
+  "repository": "https://github.com/phoenix-islands/phoenix-islands-js",
+  "homepage": "https://github.com/phoenix-islands/phoenix-islands-js/tree/main/packages/core",
+  "license": "MIT",
+  "keywords": [
+    "lib"
+  ],
+  "type": "module",
+  "main": "dist/index.cjs",
+  "browser": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "changelog.md",
+    "readme.md"
+  ],
+  "scripts": {
+    "start": "vite",
+    "dev": "vite build --watch",
+    "build": "vite build && npm run types",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "types": "tsc -d --emitDeclarationOnly --outDir ./dist && resolve-tspaths -o ./dist",
+    "lint": "tsc --noEmit && eslint . --cache --cache-location ../../node_modules/.eslint",
+    "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
+  }
+}
