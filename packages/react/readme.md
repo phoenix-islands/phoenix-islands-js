@@ -47,6 +47,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
   },
 });
 ```
+
 ### 3. Use the component in Phoenix live-view
 
 ```elixir
@@ -54,7 +55,12 @@ let liveSocket = new LiveSocket("/live", Socket, {
 ```
 
 ```elixir
+defmodule MyApp.PageLive.Index do
+  use MyApp, :live_view
+  
+  # add this
   import PhoenixIslands
+end
 ```
 
 ```elixir

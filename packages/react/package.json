@@ -10,7 +10,10 @@
   "homepage": "https://github.com/phoenix-islands/phoenix-islands-js/tree/main/packages/react",
   "license": "MIT",
   "keywords": [
-    "lib"
+    "phoenix",
+    "live-view",
+    "islands",
+    "react"
   ],
   "type": "module",
   "main": "dist/index.cjs",
