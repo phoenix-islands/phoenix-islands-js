@@ -8,21 +8,16 @@
 
 ## Features
 
-- **Fast and Lightweight**: Utilizes native NPM workspaces for optimal performance without unnecessary bloat.
-- **Automated Releases**: Automatically triggers GitHub releases and NPM publishing for each package after a `git push`.
-- **Changelog Updates**: Automatically updates changelogs for each package after a `git push`.
-- **Dependency Management**: Effortlessly manage and update dependencies within the monorepo.
-- **Multilingual Support**: Develop packages with mixed languages within a single repository.
-- **Modern Code**: Embrace the latest syntax and coding practices for increased productivity.
-- **Output Formats**: Provides UMD, CommonJS, and ESM output formats for JavaScript packages.
-- **Live Playground**: Get a live playground environment ready to experiment with your code.
+- **Live Islands**: We can enjoy huge front-end ecosystem without losing Liveliness. We start with React for now but we can go as far as all framework that [nanostore](https://github.com/nanostores/nanostores) supports in the near future.
+- **Stream support**: That means no more giant JSON eating up server memory.
+- **LiveView childresn passing (Experimental)**: LiveView inside React inside Live-View.
 
 ## Packages
 
-| Package                             | Description                          | Version (click for changelog)                           |
-| :---------------------------------- | :----------------------------------- | :------------------------------------------------------ |
-| [core](packages/core)               | Based phoenix live-view hook logic   | [v0.0.0-development](packages/core/changelog.md)      |
-| [react](packages/react)             | React adapter                        | [v0.0.0-development](packages/react/changelog.md)       |
+| Package                 | Description                        | Version (click for changelog)          |
+| :---------------------- | :--------------------------------- | :------------------------------------- |
+| [core](packages/core)   | Based phoenix live-view hook logic | [v0.0.5](packages/core/changelog.md)   |
+| [react](packages/react) | React adapter                      | [v0.0.12](packages/react/changelog.md) |
 
 ## Development
 
