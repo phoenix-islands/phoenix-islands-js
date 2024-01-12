@@ -1,0 +1,61 @@
+<div
+  class="phx-island"
+  id="1"
+  phx-hook="ReactIsland"
+  x-component="ReactCounter"
+  data-phx-id="phx-F6mgYaI-Yq7GPAKD-9"
+>
+  <div id="1-content" class="phx-island_content" phx-update="ignore">
+    <div
+      class="w-full flex flex-col gap-3 items-stretch p-4 rounded-lg border-dashed border-zinc-500 border-2"
+    >
+      <div class="flex flex-row gap-3 items-center justify-between">
+        <div>Client State: 1</div>
+        <button
+          class="phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80"
+        >
+          Client +1
+        </button>
+      </div>
+      <div class="p-3 rounded-lg border-dashed border-zinc-300 border-2">
+        <div class="phx-islands_react-children">
+          <div class="w-full flex flex-row gap-3 items-center justify-between">
+            <span>Server State: 1</span>
+            <button
+              class="phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80"
+              phx-click="update_counter"
+              phx-value-counter="0"
+            >
+              LiveView -1
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phx-island_data" style="display: none">
+    <!-- <PhoenixIslands.data> lib/phoenix_islands.ex:72 -->
+    <dl data-phx-id="phx-F6mgYaI-Yq7GPAKD-10">
+      <dt>counter</dt>
+      <dd>
+        <!-- <PhoenixIslands.data> lib/phoenix_islands.ex:40 -->
+        <span class="number" path="1-data[counter]">1</span>
+        <!-- </PhoenixIslands.data> -->
+      </dd>
+    </dl>
+    <!-- </PhoenixIslands.data> -->
+  </div>
+
+  <div class="phx-island_children" style="display: none">
+    <div class="w-full flex flex-row gap-3 items-center justify-between">
+      <span>Server State: 1</span>
+      <button
+        class="phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80"
+        phx-click="update_counter"
+        phx-value-counter="0"
+      >
+        LiveView -1
+      </button>
+    </div>
+  </div>
+</div>
