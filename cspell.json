@@ -7,8 +7,11 @@
         "cachedir",
         "defmodule",
         "doogu",
+        "esbuild",
+        "floki",
         "nanostore",
         "nanostores",
+        "noreply",
         "tspaths"
     ],
     "ignoreWords": [],
