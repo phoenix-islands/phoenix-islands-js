@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/react",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publishConfig": {
     "access": "public"
   },
@@ -35,8 +35,9 @@
   "peerDependencies": {
     "@types/react": "*",
     "@types/react-dom": "*",
-    "react": "^16.8 || ^17.0 || ^18.0",
-    "react-dom": "^16.8 || ^17.0 || ^18.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "@phoenix-islands/core": ">=0.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
@@ -49,10 +50,9 @@
   "scripts": {
     "start": "vite",
     "dev": "vite build --watch",
-    "build": "vite build && npm run types",
+    "build": "vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "types": "tsc -d --emitDeclarationOnly --outDir ./dist && resolve-tspaths -o ./dist",
     "lint": "tsc --noEmit && eslint . --cache --cache-location ../../node_modules/.eslint",
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18"
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/core",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publishConfig": {
     "access": "public"
   },
@@ -32,16 +32,16 @@
   "scripts": {
     "start": "vite",
     "dev": "vite build --watch",
-    "build": "vite build && npm run types",
+    "build": "vite build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "types": "tsc -d --emitDeclarationOnly --outDir ./dist && resolve-tspaths -o ./dist",
     "lint": "tsc --noEmit && eslint . --cache --cache-location ../../node_modules/.eslint",
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
   "devDependencies": {
     "@types/phoenix_live_view": "^0.18.4",
-    "phoenix_live_view": "^0.20.3"
+    "phoenix_live_view": "^0.20.3",
+    "vite-plugin-dts": "^3.7.0"
   },
   "dependencies": {
     "nanostores": "^0.9.5"

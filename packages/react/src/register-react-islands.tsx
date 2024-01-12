@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { registerIslands } from '@phoenix-islands/core'
-import parse from 'html-react-parser'
+// import parse from 'html-react-parser'
 import React from 'react'
 import { createRoot, Root } from 'react-dom/client'
 
@@ -23,7 +23,12 @@ export const registerReactIslands = registerIslands(
       <React.StrictMode>
         <Component
           {...props}
-          children={props.children && parse(props.children)}
+          children={
+            <div
+              className='phx-islands_react-children'
+              dangerouslySetInnerHTML={{ __html: props.children as string }}
+            />
+          }
         />
       </React.StrictMode>
     ),

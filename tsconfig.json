@@ -1,12 +1,21 @@
 {
-  "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
     "lib": [
-      "es5",
-      "es2015.promise",
-      "dom",
-      "es2015"
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
-    "paths": {}
-  }
+    "allowJs": false,
+    "skipLibCheck": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+  },
 }

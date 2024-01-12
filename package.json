@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "doogu": "^3.2.10",
-    "vite-plugin-cachedir": "^1.1.1"
+    "vite-plugin-cachedir": "^1.1.1",
+    "vite-plugin-dts": "^3.7.0"
   },
   "config": {
     "commitizen": {
