@@ -147,7 +147,9 @@ export const registerIslands =
       if (this.children !== children) {
         console.log(this.el.id, 'children updated')
         render(this._rootEl, Component, {
-          dispatch: this.pushEvent,
+          pushEvent: this.pushEvent,
+          pushEventTo: this.pushEventTo,
+          handleEvent: this.handleEvent,
           store: this.$store,
           children
         })

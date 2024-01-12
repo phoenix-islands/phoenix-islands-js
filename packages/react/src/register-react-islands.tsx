@@ -6,10 +6,11 @@ import { createRoot, Root } from 'react-dom/client'
 
 import type { DeepMapStore, BaseDeepMap } from 'nanostores'
 import type { ViewHook } from 'phoenix_live_view'
-export type ReactIslandProps<T extends BaseDeepMap> = React.PropsWithChildren<{
-  dispatch: ViewHook['pushEvent']
-  store: DeepMapStore<T>
-}>
+export type ReactIslandProps<T extends BaseDeepMap> = React.PropsWithChildren<
+  {
+    store: DeepMapStore<T>
+  } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
+>
 
 export const registerReactIslands = registerIslands(
   'ReactIsland',
