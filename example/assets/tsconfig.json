@@ -1,6 +1,10 @@
 {
-	"compilerOptions": {
-		"jsx": "react",
-		"esModuleInterop": true
-	}
+    "compilerOptions": {
+        "types": ["node"],
+        "baseUrl": ".",
+        "paths": {
+            "$lib": ["svelte"],
+            "$lib/*": ["svelte/*"]
+        }
+    }
 }

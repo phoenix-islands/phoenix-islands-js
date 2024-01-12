@@ -9,6 +9,18 @@
   "license": "ISC",
   "dependencies": {
     "@phoenix-islands/react": "^0.0.12",
+    "live_svelte": "file:../deps/live_svelte",
+    "phoenix": "file:../deps/phoenix",
+    "phoenix_html": "file:../deps/phoenix_html",
+    "phoenix_live_view": "file:../deps/phoenix_live_view",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.16.17",
+    "esbuild-plugin-import-glob": "^0.1.1",
+    "esbuild-svelte": "^0.8.0",
+    "esbuild-visualizer": "^0.6.0",
+    "svelte": "^4.2.8",
+    "svelte-preprocess": "^5.1.3"
   }
 }

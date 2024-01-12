@@ -34,3 +34,15 @@ example-*.tar
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
+
+# Ignore automatically generated Svelte files by the ~V sigil
+/assets/svelte/_build/
+
+# Ignore ssr build for svelte.
+/priv/svelte/
+
+# Ignore automatically generated Svelte files by the ~V sigil
+/assets/svelte/_build/
+
+# Ignore ssr build for svelte.
+/priv/svelte/
