@@ -2,7 +2,7 @@
 import { deepMap, DeepMapStore } from 'nanostores'
 import type { ViewHook } from 'phoenix_live_view'
 
-export const registerIsland =
+export const registerIslands =
   <C>(name: string, createRoot: any, render: any, unmount: any) =>
   (components: Record<string, C>) => {
     const config = {} as ViewHook & {
