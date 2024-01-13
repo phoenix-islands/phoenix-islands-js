@@ -9,7 +9,7 @@ defmodule ExampleWeb.IslandsLive do
         <p class="text-[1.2rem] mt-4 font-semibold leading-10 tracking-tighter text-zinc-900">
           Live View React Island
         </p>
-        <.island id="1" component="ReactCounter" data={%{"counter" => @counter}}>
+        <.island id="1" type={:react} component="ReactCounter" data={%{"counter" => @counter}}>
           <div class="w-full flex flex-row gap-3 items-center justify-between">
             <span>Server State: <%= @counter %></span>
             <button

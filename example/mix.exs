@@ -41,7 +41,7 @@ defmodule Example.MixProject do
       {:jason, "~> 1.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
-      {:phoenix_islands, "~> 0.0.1"},
+      {:phoenix_islands, "~> 0.0.3"},
       {:phoenix_live_dashboard, "~> 0.8.2"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.20.1"},
