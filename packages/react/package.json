@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/react",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.0.13",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -37,7 +37,7 @@
     "@types/react-dom": "*",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "@phoenix-islands/core": ">=0.0.0"
+    "@phoenix-islands/core": ">=0.1.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
@@ -57,10 +57,8 @@
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
   "dependencies": {
-    "@nanostores/react": "^0.7.1",
-    "@phoenix-islands/core": "0.0.5",
-    "html-react-parser": "^5.1.0",
-    "nanostore": "^1.2.1"
+    "@phoenix-islands/core": "^0.1.1",
+    "@nanostores/react": "^0.7.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.47",

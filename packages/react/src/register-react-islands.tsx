@@ -24,12 +24,7 @@ export const registerReactIslands = registerIslands(
       <React.StrictMode>
         <Component
           {...props}
-          children={
-            <div
-              className='phx-islands_react-children'
-              dangerouslySetInnerHTML={{ __html: props.children as string }}
-            />
-          }
+          children={<div className='phx-island_children--mounted' />}
         />
       </React.StrictMode>
     ),

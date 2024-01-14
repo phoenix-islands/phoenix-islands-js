@@ -11,11 +11,11 @@ export default defineConfig({
       name: 'myLib',
       formats: ['es', 'cjs', 'umd'],
       fileName: 'index'
+    },
+    rollupOptions: {
+      external: ['nanostores', 'morphdom'],
+      output: { globals: { nanostores: 'Nanostores', morphdom: 'Morphdom' } }
     }
-    // rollupOptions: {
-    //   external: [],
-    //   output: { globals: { } }
-    // }
   },
   test: {
     globals: true,

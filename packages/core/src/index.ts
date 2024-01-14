@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import morphdom from 'morphdom'
 import { deepMap, DeepMapStore } from 'nanostores'
+
 import type { ViewHook } from 'phoenix_live_view'
+
+export type Config = { childrenPassingMode?: 'sync' }
 
 export const registerIslands =
   <C>(name: string, createRoot: any, render: any, unmount: any) =>
-  (components: Record<string, C>) => {
-    const config = {} as ViewHook & {
+  (components: Record<string, C>, config?: Config) => {
+    const viewHook = {} as ViewHook & {
       $store: DeepMapStore<any>
       component: string | null
       _rootEl: any
@@ -13,15 +17,16 @@ export const registerIslands =
       visit: ($store: DeepMapStore<any>, e: ChildNode, path: string) => any
       updateData: (rootEl: Element) => void
       render: () => void
+      update: (initial?: boolean) => void
     }
-    Object.assign(config, {
+    Object.assign(viewHook, {
       _rootEl: null,
       component: null,
       // dataObserver: null,
       $store: null,
       children: ''
     })
-    config.visit = function ($store, e, path) {
+    viewHook.visit = function ($store, e, path) {
       switch (e.nodeType) {
         case Node.ELEMENT_NODE: {
           switch (e.nodeName) {
@@ -89,7 +94,7 @@ export const registerIslands =
         }
       }
     }
-    config.updateData = function (rootEl: Element) {
+    viewHook.updateData = function (rootEl: Element) {
       rootEl.parentElement
         ?.querySelector('.phx-island_data')
         ?.childNodes.forEach(child => {
@@ -98,7 +103,7 @@ export const registerIslands =
           }
         })
     }
-    config.mounted = function () {
+    viewHook.mounted = function () {
       this.visit = this.visit.bind(this)
       this.pushEvent = this.pushEvent.bind(this)
 
@@ -125,16 +130,50 @@ export const registerIslands =
           );
         */
       this.render()
+      this.update()
     }
 
-    config.destroyed = function () {
+    viewHook.destroyed = function () {
       if (!this._rootEl) return
       unmount(this._rootEl)
     }
-    config.updated = function () {
-      this.render()
+    viewHook.updated = function () {
+      this.update()
     }
-    config.render = function () {
+    viewHook.update = function (initial) {
+      if (!this.component) return
+      const childrenPassingMode = config?.childrenPassingMode || 'sync'
+      if (initial || childrenPassingMode === 'sync') {
+        setTimeout(() => {
+          const rootEl = document
+            .getElementById(this.el.id)!
+            .querySelector('.phx-island_content')!
+          const children = rootEl.parentElement?.querySelector(
+            '.phx-island_children'
+          )
+          const mountedChildren = rootEl.querySelector(
+            '.phx-island_children--mounted'
+          )
+          // console.log(rootEl.outerHTML, mountedChildren, children)
+          if (mountedChildren && children) {
+            // console.log(mountedChildren.outerHTML, children.outerHTML)
+            morphdom(
+              mountedChildren,
+              childrenPassingMode === 'sync' ? children.outerHTML : children,
+              {
+                childrenOnly: true
+              }
+            )
+            // console.log(mountedChildren.outerHTML, children.outerHTML)
+          }
+        }, 0)
+      }
+      const rootEl = document
+        .getElementById(this.el.id)!
+        .querySelector('.phx-island_content')!
+      this.updateData(rootEl)
+    }
+    viewHook.render = function () {
       if (!this.component) return
       const Component = components[this.component]
       const rootEl = document
@@ -156,5 +195,5 @@ export const registerIslands =
         this.children = children ?? ''
       }
     }
-    return { [name]: config }
+    return { [name]: viewHook }
   }
