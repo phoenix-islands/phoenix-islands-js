@@ -1,5 +1,5 @@
 {
-  "name": "@phoenix-islands/react",
+  "name": "@phoenix-islands/data",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
   "version": "0.1.22",
   "publishConfig": {
@@ -57,12 +57,7 @@
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
   "dependencies": {
-    "@phoenix-islands/core": "^0.1.22",
-    "@nanostores/react": "^0.7.1"
+    "@phoenix-islands/core": "^0.1.22"
   },
-  "devDependencies": {
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
-    "@vitejs/plugin-react": "^4.2.1"
-  }
+  "devDependencies": {}
 }

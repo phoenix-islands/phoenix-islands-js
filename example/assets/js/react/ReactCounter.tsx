@@ -12,7 +12,7 @@ export const ReactCounter = ({
   return (
     <div className='w-full flex flex-col gap-3 items-stretch p-4 rounded-lg border-dashed border-zinc-500 border-2'>
       <div className='flex flex-row gap-3 items-center justify-between'>
-        <div>Client State: {counter}</div>
+        <div>Component Local State: {counter}</div>
         <button
           className='phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80'
           onClick={() => {

@@ -5,6 +5,7 @@
 import 'phoenix_html';
 
 import { registerReactIslands } from '@phoenix-islands/react';
+import { registerDataIslands } from '@phoenix-islands/data';
 import { Socket } from 'phoenix';
 import { LiveSocket } from 'phoenix_live_view';
 
@@ -34,7 +35,19 @@ let csrfToken = document
 let liveSocket = new LiveSocket('/live', Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
-    ...registerReactIslands({ ReactCounter, ReactSharedCounter })
+    ...registerReactIslands({ ReactCounter, ReactSharedCounter }),
+    ...registerDataIslands({
+      Logger: {
+        subscribe(store, globalStore) {
+          const u1 = store.subscribe(console.log)
+          const u2 = globalStore.subscribe(console.log)
+          return () => {
+            u1()
+            u2()
+          }
+        }
+      }
+    })
   }
 })
 

@@ -34,7 +34,7 @@ defmodule ExampleWeb.IslandsLive do
             </button>
           </div>
         </.island>
-        <.island id="3" type={:react}  data={%{"counter" => @counter}} global_store_key="counterData" />
+        <.island id="3" type={:data}  data={%{"counter" => @counter}} component="Logger" global_store_key="counterData" />
       </div>
     </div>
     """

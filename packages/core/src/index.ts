@@ -6,6 +6,19 @@ import type { ViewHook } from 'phoenix_live_view'
 
 export interface GlobalData extends BaseDeepMap {}
 
+const settings = { debug: false }
+
+if (window) {
+  ;(window as any).setDebug = (v: boolean) => {
+    settings.debug = v
+  }
+}
+export const debug = (...args: any[]) => {
+  if (settings.debug) {
+    console.log(...args)
+  }
+}
+
 export type Config = { childrenPassingMode?: 'sync' }
 export type IslandProps<T extends BaseDeepMap> = {
   children: string | undefined
@@ -34,14 +47,18 @@ const CLASS_QUERIES = Object.fromEntries(
 
 export const registerIslands = <C, Root = any>(
   name: string,
-  createRoot: (el: Element) => Root,
-  render: (root: Root, Component: C, props: IslandProps<any>) => void,
-  unmount: (root: Root) => void
+  createRoot: (el: Element, Component: C) => Root,
+  render: (
+    root: Root,
+    Component: C,
+    props: IslandProps<any>
+  ) => null | undefined | (() => void),
+  unmount: (root: Root, Component: C) => void
 ) => {
   ;(window as any)[WINDOW_GLOBAL_STORE_KEY] =
     (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({})
 
-  console.log((window as any)[WINDOW_GLOBAL_STORE_KEY])
+  debug((window as any)[WINDOW_GLOBAL_STORE_KEY])
 
   return (components: Record<string, C>, config?: Config) => {
     const viewHook = {} as ViewHook & {
@@ -50,8 +67,9 @@ export const registerIslands = <C, Root = any>(
       globalStoreKey: string | null
       _rootEl: any
       children: string
+      unsubscribe?: null | (() => void)
       visit: ($store: DeepMapStore<any>, e: ChildNode, path: string) => any
-      updateData: (rootEl: Element) => void
+      updateData: () => void
       render: () => void
       update: (initial?: boolean) => void
     }
@@ -131,19 +149,17 @@ export const registerIslands = <C, Root = any>(
       }
     }
 
-    viewHook.updateData = function (rootEl: Element) {
+    viewHook.updateData = function () {
       let updated: any = undefined
-      rootEl.parentElement
-        ?.querySelector(CLASS_QUERIES.DATA)
-        ?.childNodes.forEach(child => {
-          if (updated !== undefined) return
-          if (child.nodeType == Node.ELEMENT_NODE) {
-            updated = this.visit(this.$store, child, '')
-          }
-        })
+      this.el.querySelector(CLASS_QUERIES.DATA)?.childNodes.forEach(child => {
+        if (updated !== undefined) return
+        if (child.nodeType == Node.ELEMENT_NODE) {
+          updated = this.visit(this.$store, child, '')
+        }
+      })
 
-      console.log(`[${this.el.id}] Update Data:`, this.globalStoreKey, updated)
       if (this.globalStoreKey) {
+        debug(`[${this.el.id}] Update Data:`, this.globalStoreKey, updated)
         const globalStore: DeepMapStore<any> = ((window as any)[
           WINDOW_GLOBAL_STORE_KEY
         ] = (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({}))
@@ -158,18 +174,20 @@ export const registerIslands = <C, Root = any>(
       const rootEl = document
         .getElementById(this.el.id)!
         .querySelector(CLASS_QUERIES.CONTENT)!
-      this.component = rootEl.parentElement!.getAttribute(ATTRIBUTES.COMPONENT)
-      console.log(`[${this.el.id}] Mounting component:`, this.component)
+      this.component = this.el.getAttribute(ATTRIBUTES.COMPONENT)
+      debug(`[${this.el.id}] Mounting component:`, this.component)
       this.globalStoreKey =
-        rootEl.parentElement!.getAttribute(ATTRIBUTES.GLOBAL_STORE_KEY) ?? null
-      console.log(`[${this.el.id}] Register Data:`, this.globalStoreKey)
-      this._rootEl = createRoot(rootEl)
+        this.el.getAttribute(ATTRIBUTES.GLOBAL_STORE_KEY) ?? null
+      debug(`[${this.el.id}] Register Data:`, this.globalStoreKey)
+      if (this.component) {
+        this._rootEl = createRoot(rootEl, components[this.component])
+      }
       this.$store = deepMap<any>({})
       // TODO: reduce tree traversal by DOM change detection
       /** 
           https://github.com/nanostores/nanostores -> supports multiple client framework
           https://github.com/bsalex/typed-path -> type-safe path watching
-          this.dataObserver = new MutationObserver(console.log);
+          this.dataObserver = new MutationObserver(debug);
           this.dataObserver.observe(
             document.getElementById(this.el.id)!.querySelector(CLASS_QUERIES.DATA)!,
             {
@@ -186,58 +204,45 @@ export const registerIslands = <C, Root = any>(
     }
 
     viewHook.destroyed = function () {
-      if (!this._rootEl) return
-      unmount(this._rootEl)
+      if ((this._rootEl, this.component))
+        unmount(this._rootEl, components[this.component])
     }
     viewHook.updated = function () {
       this.update()
     }
     viewHook.update = function (initial) {
-      if (!this.component) return
-      const childrenPassingMode = config?.childrenPassingMode || 'sync'
-      if (initial || childrenPassingMode === 'sync') {
-        setTimeout(() => {
-          const rootEl = document
-            .getElementById(this.el.id)!
-            .querySelector(CLASS_QUERIES.CONTENT)!
-          const children = rootEl.parentElement?.querySelector(
-            CLASS_QUERIES.CHILDREN
-          )
-          const mountedChildren = rootEl.querySelector(
-            CLASS_QUERIES.MOUNTED_CHILDREN
-          )
-          // console.log(rootEl.outerHTML, mountedChildren, children)
-          if (mountedChildren && children) {
-            // console.log(mountedChildren.outerHTML, children.outerHTML)
-            morphdom(
-              mountedChildren,
-              childrenPassingMode === 'sync' ? children.outerHTML : children,
-              {
-                childrenOnly: true
-              }
+      if (this.component) {
+        const childrenPassingMode = config?.childrenPassingMode || 'sync'
+        if (initial || childrenPassingMode === 'sync') {
+          setTimeout(() => {
+            const children = this.el.querySelector(CLASS_QUERIES.CHILDREN)
+            const mountedChildren = this.el.querySelector(
+              CLASS_QUERIES.MOUNTED_CHILDREN
             )
-            // console.log(mountedChildren.outerHTML, children.outerHTML)
-          }
-        }, 0)
+            if (mountedChildren && children) {
+              morphdom(
+                mountedChildren,
+                childrenPassingMode === 'sync' ? children.outerHTML : children,
+                { childrenOnly: true }
+              )
+            }
+          }, 0)
+        }
       }
-      const rootEl = document
-        .getElementById(this.el.id)!
-        .querySelector(CLASS_QUERIES.CONTENT)!
-      this.updateData(rootEl)
+      this.updateData()
     }
     viewHook.render = function () {
       if (!this.component) return
+      if (this.unsubscribe) {
+        this.unsubscribe()
+        this.unsubscribe = undefined
+      }
       const Component = components[this.component]
-      const rootEl = document
-        .getElementById(this.el.id)!
-        .querySelector(CLASS_QUERIES.CONTENT)!
-      const children = rootEl.parentElement?.querySelector(
-        CLASS_QUERIES.CHILDREN
-      )?.innerHTML
-      this.updateData(rootEl)
+      const children = this.el.querySelector(CLASS_QUERIES.CHILDREN)?.innerHTML
+      this.updateData()
       if (this.children !== children) {
-        console.log(this.el.id, 'children updated')
-        render(this._rootEl, Component, {
+        debug(this.el.id, 'children updated')
+        this.unsubscribe = render(this._rootEl, Component, {
           pushEvent: this.pushEvent,
           pushEventTo: this.pushEventTo,
           handleEvent: this.handleEvent,

@@ -1,32 +1,4 @@
-# @phoenix-islands/react
-
-**Phoenix Islands** is a library for creating islands of various frontend frameworks in Phoenix LiveView.
-
-## Install
-
-```bash
-cd assets
-npm i react @phoenix-islands/react
-```
-
-Or
-
-```bash
-yarn add @phoenix-islands/react
-```
-
-## Usage
-
-### 1. Install elixir library
-
-Follow [instruction here to install server part](https://hexdocs.pm/phoenix_islands/readme.html)
-
-### 2. Create an island component
-
-**Note** You might want to add `'./js/**/*.ts?'` to `tailwind.config.js` if you want to use typescript.
-
-```tsx
-import { ReactIslandProps, useStore } from '@phoenix-islands/react'
+import { ReactIslandProps, registerReactIslands, useStore } from '../dist'
 import React from 'react'
 
 export const ReactCounter = ({
@@ -57,23 +29,15 @@ export const ReactCounter = ({
     </div>
   )
 }
-```
 
-### 3. Register the component with live-view hooks
+const hooks = registerReactIslands({ ReactCounter })
 
-```tsx
-import { registerReactIsland } from '@phoenix-islands/react'
-
-let liveSocket = new LiveSocket('/live', Socket, {
-  params: { _csrf_token: csrfToken },
-  hooks: {
-    ...registerReactIslands({ ReactCounter })
-  }
-})
-```
-
-## License
-
-![GitHub](https://img.shields.io/github/license/phoenix-islands/phoenix-islands-js)
-
-A project by [Usage](https://www.usage.so) &copy; 2023.
+const hook = hooks.ReactIsland
+hook.el = document.querySelector('.phx-island')!
+hook.pushEvent = () => null
+hook.mounted?.bind(hook)()
+setInterval(() => {
+  document.querySelector('.phx-island_children .text')!.innerHTML =
+  Math.random().toString()
+  hook.updated?.bind(hook)()
+}, 2000)

@@ -12,6 +12,7 @@
         "morphdom",
         "nanostores",
         "noreply",
+        "topbar",
         "tspaths"
     ],
     "ignoreWords": [],

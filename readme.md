@@ -16,8 +16,9 @@
 
 | Package                 | Description                        | Version (click for changelog)          |
 | :---------------------- | :--------------------------------- | :------------------------------------- |
-| [core](packages/core)   | Based phoenix live-view hook logic | [v0.0.5](packages/core/changelog.md)   |
-| [react](packages/react) | React adapter                      | [v0.0.12](packages/react/changelog.md) |
+| [core](packages/core)   | Based phoenix live-view hook logic | [v0.1.12](packages/core/changelog.md)  |
+| [data](packages/data)   | Vanilla JS adapter                 | [v0.1.12](packages/data/changelog.md)  |
+| [react](packages/react) | React adapter                      | [v0.1.12](packages/react/changelog.md) |
 
 ## Development
 

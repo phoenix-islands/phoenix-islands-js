@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MyLib Demo</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div class="p-5">
+      <h1 class="mb-4">MyLib Demo</h1>
+
+      <p id="esm" class="text-success"></p>
+      <p id="umd" class="text-success"></p>
+      <div id="root"></div>
+
+      <div
+        class="phx-island"
+        id="1"
+        phx-hook="ReactIsland"
+        x-component="ReactCounter"
+      >
+        <div
+          id="1-content"
+          class="phx-island_content"
+          phx-update="ignore"
+        ></div>
+
+        <div class="phx-island_data" style="display: none">
+          <!-- <PhoenixIslands.data> lib/phoenix_islands.ex:90 -->
+          <dl>
+            <dt>initial</dt>
+            <dd>
+              <!-- <PhoenixIslands.data> lib/phoenix_islands.ex:58 -->
+              <span class="number" path="1-data[initial]">20</span>
+              <!-- </PhoenixIslands.data> -->
+            </dd>
+          </dl>
+          <!-- </PhoenixIslands.data> -->
+        </div>
+
+        <div class="phx-island_children" style="display: none">
+          <div class="flex flex-col gap-3">
+            <input
+              class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <div class="text">Phoenix children</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/demo/main.tsx"></script>
+
+    <!-- <script type="module">
+      import { registerReactIslands } from "./dist/index.js"
+
+      document.querySelector("#esm").innerHTML = "foo"
+    </script> -->
+
+    <!-- <script src="./dist/index.umd.cjs"></script>
+    <script>
+      document.querySelector("#umd").innerHTML = "umd"
+    </script> -->
+  </body>
+</html>
