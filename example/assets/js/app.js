@@ -2,16 +2,16 @@
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
-import 'phoenix_html';
+import "phoenix_html";
 
-import { registerDataIslands } from '@phoenix-islands/data';
-import { registerReactIslands } from '@phoenix-islands/react';
-import { Socket } from 'phoenix';
-import { LiveSocket } from 'phoenix_live_view';
+import { registerDataIslands } from "@phoenix-islands/data";
+import { registerReactIslands } from "@phoenix-islands/react";
+import { Socket } from "phoenix";
+import { LiveSocket } from "phoenix_live_view";
 
-import topbar from '../vendor/topbar';
-import { ReactCounter } from './react/ReactCounter';
-import { ReactSharedCounter } from './react/ReactSharedCounter';
+import topbar from "../vendor/topbar";
+import { ReactCounter } from "./react/ReactCounter";
+import { ReactSharedCounter } from "./react/ReactSharedCounter";
 
 // You can include dependencies in two ways.
 //
@@ -31,36 +31,36 @@ import { ReactSharedCounter } from './react/ReactSharedCounter';
 
 const csrfToken = document
   .querySelector("meta[name='csrf-token']")
-  .getAttribute('content')
-const liveSocket = new LiveSocket('/live', Socket, {
+  .getAttribute("content");
+const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
     ...registerReactIslands({ ReactCounter, ReactSharedCounter }),
     ...registerDataIslands({
       Logger: {
         subscribe(store, globalStore) {
-          const u1 = store.subscribe(console.log)
-          const u2 = globalStore.subscribe(console.log)
+          const u1 = store.subscribe(console.log);
+          const u2 = globalStore.subscribe(console.log);
           return () => {
-            u1()
-            u2()
-          }
-        }
-      }
-    })
-  }
-})
+            u1();
+            u2();
+          };
+        },
+      },
+    }),
+  },
+});
 
 // Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: '#29d' }, shadowColor: 'rgba(0, 0, 0, .3)' })
-window.addEventListener('phx:page-loading-start', _info => topbar.show(300))
-window.addEventListener('phx:page-loading-stop', _info => topbar.hide())
+topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
+window.addEventListener("phx:page-loading-start", (_info) => topbar.show(300));
+window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
 
 // connect if there are any LiveViews on the page
-liveSocket.connect()
+liveSocket.connect();
 
 // expose liveSocket on window for web console debug logs and latency simulation:
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
-window.liveSocket = liveSocket
+window.liveSocket = liveSocket;

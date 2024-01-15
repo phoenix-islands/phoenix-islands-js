@@ -31,9 +31,14 @@ let liveSocket = new LiveSocket('/live', Socket, {
   hooks: {
     ...registerDataIslands({
       Logger: {
-        init: console.log,
-        update: console.log,
-        unmount: console.log
+        subscribe(store, globalStore) {
+          const u1 = store.subscribe(console.log)
+          const u2 = globalStore.subscribe(console.log)
+          return () => {
+            u1()
+            u2()
+          }
+        }
       }
     })
   }

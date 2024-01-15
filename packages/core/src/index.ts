@@ -18,8 +18,8 @@ export const debug = (...args: any[]) => {
 }
 
 export type Config = { childrenPassingMode?: 'sync' }
-export type IslandProps<T extends BaseDeepMap> = {
-  children: string | undefined
+export type IslandProps<T extends BaseDeepMap, C = string> = {
+  children: C | undefined
   store: DeepMapStore<T>
   globalStore: DeepMapStore<Partial<GlobalData>>
 } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
