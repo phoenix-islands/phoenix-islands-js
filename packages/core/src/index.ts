@@ -21,7 +21,7 @@ export type Config = { childrenPassingMode?: 'sync' }
 export type IslandProps<T extends BaseDeepMap> = {
   children: string | undefined
   store: DeepMapStore<T>
-  globalStore: DeepMapStore<GlobalData>
+  globalStore: DeepMapStore<Partial<GlobalData>>
 } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
 
 export const ATTRIBUTES = {
