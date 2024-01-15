@@ -1,11 +1,9 @@
-import morphdom from 'morphdom'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BaseDeepMap, deepMap, DeepMapStore } from 'nanostores'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GlobalData } from './global-data'
+
 import type { ViewHook } from 'phoenix_live_view'
-
-export interface GlobalData extends BaseDeepMap {}
-
 const settings = { debug: false }
 
 if (window) {
@@ -47,13 +45,13 @@ const CLASS_QUERIES = Object.fromEntries(
 
 export const registerIslands = <C, Root = any>(
   name: string,
-  createRoot: (el: Element, Component: C) => Root,
+  createRoot: (el: Element) => Root,
   render: (
     root: Root,
     Component: C,
     props: IslandProps<any>
   ) => null | undefined | (() => void),
-  unmount: (root: Root, Component: C) => void
+  unmount: (root: Root) => void
 ) => {
   ;(window as any)[WINDOW_GLOBAL_STORE_KEY] =
     (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({})
@@ -180,7 +178,7 @@ export const registerIslands = <C, Root = any>(
         this.el.getAttribute(ATTRIBUTES.GLOBAL_STORE_KEY) ?? null
       debug(`[${this.el.id}] Register Data:`, this.globalStoreKey)
       if (this.component) {
-        this._rootEl = createRoot(rootEl, components[this.component])
+        this._rootEl = createRoot(rootEl)
       }
       this.$store = deepMap<any>({})
       // TODO: reduce tree traversal by DOM change detection
@@ -204,8 +202,7 @@ export const registerIslands = <C, Root = any>(
     }
 
     viewHook.destroyed = function () {
-      if ((this._rootEl, this.component))
-        unmount(this._rootEl, components[this.component])
+      if ((this._rootEl, this.component)) unmount(this._rootEl)
     }
     viewHook.updated = function () {
       this.update()
@@ -220,11 +217,12 @@ export const registerIslands = <C, Root = any>(
               CLASS_QUERIES.MOUNTED_CHILDREN
             )
             if (mountedChildren && children) {
-              morphdom(
-                mountedChildren,
-                childrenPassingMode === 'sync' ? children.outerHTML : children,
-                { childrenOnly: true }
-              )
+              mountedChildren.innerHTML = children.innerHTML
+              // morphdom(
+              //   mountedChildren,
+              //   childrenPassingMode === 'sync' ? children.outerHTML : children,
+              //   { childrenOnly: true }
+              // )
             }
           }, 0)
         }

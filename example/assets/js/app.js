@@ -4,8 +4,8 @@
 // import "./user_socket.js"
 import 'phoenix_html';
 
-import { registerReactIslands } from '@phoenix-islands/react';
 import { registerDataIslands } from '@phoenix-islands/data';
+import { registerReactIslands } from '@phoenix-islands/react';
 import { Socket } from 'phoenix';
 import { LiveSocket } from 'phoenix_live_view';
 
@@ -29,10 +29,10 @@ import { ReactSharedCounter } from './react/ReactSharedCounter';
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 // Establish Phoenix Socket and LiveView configuration.
 
-let csrfToken = document
+const csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute('content')
-let liveSocket = new LiveSocket('/live', Socket, {
+const liveSocket = new LiveSocket('/live', Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
     ...registerReactIslands({ ReactCounter, ReactSharedCounter }),

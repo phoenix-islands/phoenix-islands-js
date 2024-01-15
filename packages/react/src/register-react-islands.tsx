@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GlobalData, registerIslands, CLASSES } from '@phoenix-islands/core'
+import { CLASSES, registerIslands } from '@phoenix-islands/core'
+import { GlobalData } from '@phoenix-islands/core/dist/global-data'
 import React from 'react'
 import { createRoot, Root } from 'react-dom/client'
 
@@ -21,7 +22,7 @@ export const registerReactIslands = registerIslands(
     Component: React.FC<ReactIslandProps<any>>,
     props: ReactIslandProps<any>
   ) =>
-    root.render(
+    void root.render(
       <React.StrictMode>
         <Component
           {...props}

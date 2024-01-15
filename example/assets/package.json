@@ -8,8 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@phoenix-islands/data": "^0.1.22",
-    "@phoenix-islands/react": "^0.1.22",
+    "@phoenix-islands/data": "^0.1.25",
+    "@phoenix-islands/react": "^0.1.25",
     "jotai": "^2.6.1",
     "react": "^18.2.0"
   }
