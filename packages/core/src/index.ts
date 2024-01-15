@@ -1,17 +1,53 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import morphdom from 'morphdom'
-import { deepMap, DeepMapStore } from 'nanostores'
+import { BaseDeepMap, deepMap, DeepMapStore } from 'nanostores'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ViewHook } from 'phoenix_live_view'
 
-export type Config = { childrenPassingMode?: 'sync' }
+export interface GlobalData extends BaseDeepMap {}
 
-export const registerIslands =
-  <C>(name: string, createRoot: any, render: any, unmount: any) =>
-  (components: Record<string, C>, config?: Config) => {
+export type Config = { childrenPassingMode?: 'sync' }
+export type IslandProps<T extends BaseDeepMap> = {
+  children: string | undefined
+  store: DeepMapStore<T>
+  globalStore: DeepMapStore<GlobalData>
+} & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
+
+export const ATTRIBUTES = {
+  COMPONENT: 'phx-island-component',
+  GLOBAL_STORE_KEY: 'phx-island-global-store-key'
+} as const
+
+export const CLASSES = {
+  ROOT: 'phx-island_root',
+  DATA: 'phx-island_data',
+  CONTENT: 'phx-island_content',
+  CHILDREN: 'phx-island_children',
+  MOUNTED_CHILDREN: 'phx-island_children-mounted'
+} as const
+
+const WINDOW_GLOBAL_STORE_KEY = '$phxIslandsStore'
+
+const CLASS_QUERIES = Object.fromEntries(
+  Object.entries(CLASSES).map(([k, v]) => [k, `.${v}`])
+) as unknown as typeof CLASSES
+
+export const registerIslands = <C, Root = any>(
+  name: string,
+  createRoot: (el: Element) => Root,
+  render: (root: Root, Component: C, props: IslandProps<any>) => void,
+  unmount: (root: Root) => void
+) => {
+  ;(window as any)[WINDOW_GLOBAL_STORE_KEY] =
+    (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({})
+
+  console.log((window as any)[WINDOW_GLOBAL_STORE_KEY])
+
+  return (components: Record<string, C>, config?: Config) => {
     const viewHook = {} as ViewHook & {
       $store: DeepMapStore<any>
       component: string | null
+      globalStoreKey: string | null
       _rootEl: any
       children: string
       visit: ($store: DeepMapStore<any>, e: ChildNode, path: string) => any
@@ -94,23 +130,39 @@ export const registerIslands =
         }
       }
     }
+
     viewHook.updateData = function (rootEl: Element) {
+      let updated: any = undefined
       rootEl.parentElement
-        ?.querySelector('.phx-island_data')
+        ?.querySelector(CLASS_QUERIES.DATA)
         ?.childNodes.forEach(child => {
+          if (updated !== undefined) return
           if (child.nodeType == Node.ELEMENT_NODE) {
-            return this.visit(this.$store, child, '')
+            updated = this.visit(this.$store, child, '')
           }
         })
+
+      console.log(`[${this.el.id}] Update Data:`, this.globalStoreKey, updated)
+      if (this.globalStoreKey) {
+        const globalStore: DeepMapStore<any> = ((window as any)[
+          WINDOW_GLOBAL_STORE_KEY
+        ] = (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({}))
+        globalStore.setKey(this.globalStoreKey, updated)
+      }
     }
+
     viewHook.mounted = function () {
       this.visit = this.visit.bind(this)
       this.pushEvent = this.pushEvent.bind(this)
 
       const rootEl = document
         .getElementById(this.el.id)!
-        .querySelector('.phx-island_content')!
-      this.component = rootEl.parentElement!.getAttribute('x-component')
+        .querySelector(CLASS_QUERIES.CONTENT)!
+      this.component = rootEl.parentElement!.getAttribute(ATTRIBUTES.COMPONENT)
+      console.log(`[${this.el.id}] Mounting component:`, this.component)
+      this.globalStoreKey =
+        rootEl.parentElement!.getAttribute(ATTRIBUTES.GLOBAL_STORE_KEY) ?? null
+      console.log(`[${this.el.id}] Register Data:`, this.globalStoreKey)
       this._rootEl = createRoot(rootEl)
       this.$store = deepMap<any>({})
       // TODO: reduce tree traversal by DOM change detection
@@ -119,7 +171,7 @@ export const registerIslands =
           https://github.com/bsalex/typed-path -> type-safe path watching
           this.dataObserver = new MutationObserver(console.log);
           this.dataObserver.observe(
-            document.getElementById(this.el.id)!.querySelector(".phx-island_data")!,
+            document.getElementById(this.el.id)!.querySelector(CLASS_QUERIES.DATA)!,
             {
               attributes: true,
               characterData: true,
@@ -147,12 +199,12 @@ export const registerIslands =
         setTimeout(() => {
           const rootEl = document
             .getElementById(this.el.id)!
-            .querySelector('.phx-island_content')!
+            .querySelector(CLASS_QUERIES.CONTENT)!
           const children = rootEl.parentElement?.querySelector(
-            '.phx-island_children'
+            CLASS_QUERIES.CHILDREN
           )
           const mountedChildren = rootEl.querySelector(
-            '.phx-island_children--mounted'
+            CLASS_QUERIES.MOUNTED_CHILDREN
           )
           // console.log(rootEl.outerHTML, mountedChildren, children)
           if (mountedChildren && children) {
@@ -170,7 +222,7 @@ export const registerIslands =
       }
       const rootEl = document
         .getElementById(this.el.id)!
-        .querySelector('.phx-island_content')!
+        .querySelector(CLASS_QUERIES.CONTENT)!
       this.updateData(rootEl)
     }
     viewHook.render = function () {
@@ -178,9 +230,9 @@ export const registerIslands =
       const Component = components[this.component]
       const rootEl = document
         .getElementById(this.el.id)!
-        .querySelector('.phx-island_content')!
+        .querySelector(CLASS_QUERIES.CONTENT)!
       const children = rootEl.parentElement?.querySelector(
-        '.phx-island_children'
+        CLASS_QUERIES.CHILDREN
       )?.innerHTML
       this.updateData(rootEl)
       if (this.children !== children) {
@@ -190,6 +242,7 @@ export const registerIslands =
           pushEventTo: this.pushEventTo,
           handleEvent: this.handleEvent,
           store: this.$store,
+          globalStore: (window as any)[WINDOW_GLOBAL_STORE_KEY],
           children
         })
         this.children = children ?? ''
@@ -197,3 +250,4 @@ export const registerIslands =
     }
     return { [name]: viewHook }
   }
+}

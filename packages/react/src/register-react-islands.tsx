@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { registerIslands } from '@phoenix-islands/core'
-// import parse from 'html-react-parser'
+import { GlobalData, registerIslands, CLASSES } from '@phoenix-islands/core'
 import React from 'react'
 import { createRoot, Root } from 'react-dom/client'
 
+// import parse from 'html-react-parser'
 import type { DeepMapStore, BaseDeepMap } from 'nanostores'
 import type { ViewHook } from 'phoenix_live_view'
 export type ReactIslandProps<T extends BaseDeepMap> = React.PropsWithChildren<
   {
     store: DeepMapStore<T>
+    globalStore: DeepMapStore<GlobalData>
   } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
 >
 
@@ -24,7 +25,7 @@ export const registerReactIslands = registerIslands(
       <React.StrictMode>
         <Component
           {...props}
-          children={<div className='phx-island_children--mounted' />}
+          children={<div className={CLASSES.MOUNTED_CHILDREN} />}
         />
       </React.StrictMode>
     ),

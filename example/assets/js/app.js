@@ -2,14 +2,15 @@
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
-import 'phoenix_html'
+import 'phoenix_html';
 
-import { registerReactIslands } from '@phoenix-islands/react'
-import { Socket } from 'phoenix'
-import { LiveSocket } from 'phoenix_live_view'
+import { registerReactIslands } from '@phoenix-islands/react';
+import { Socket } from 'phoenix';
+import { LiveSocket } from 'phoenix_live_view';
 
-import topbar from '../vendor/topbar'
-import { ReactCounter } from './react/ReactCounter'
+import topbar from '../vendor/topbar';
+import { ReactCounter } from './react/ReactCounter';
+import { ReactSharedCounter } from './react/ReactSharedCounter';
 
 // You can include dependencies in two ways.
 //
@@ -26,13 +27,14 @@ import { ReactCounter } from './react/ReactCounter'
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 // Establish Phoenix Socket and LiveView configuration.
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute('content')
 let liveSocket = new LiveSocket('/live', Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
-    ...registerReactIslands({ ReactCounter })
+    ...registerReactIslands({ ReactCounter, ReactSharedCounter })
   }
 })
 
