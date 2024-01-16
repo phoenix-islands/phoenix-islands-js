@@ -18,6 +18,10 @@
   "scripts": {
     "dev:all": "nx run-many -t dev",
     "build:all": "nx run-many -t build",
+    "build:core": "nx build @phoenix-islands/core",
+    "build:react": "nx build @phoenix-islands/react",
+    "build:data": "nx build @phoenix-islands/data",
+    "build:proxy": "nx build @phoenix-islands/proxy",
     "test:all": "nx run-many -t test",
     "coverage:all": "nx run-many -t coverage",
     "lint:all": "nx run-many -t lint",
@@ -27,8 +31,6 @@
   "devDependencies": {
     "doogu": "^3.2.10",
     "lerna": "^8.0.2",
-    "vite-plugin-cachedir": "^1.1.1",
-    "vite-plugin-dts": "^3.7.0",
     "nx": "17.2.8"
   },
   "config": {
@@ -42,6 +44,5 @@
   "prettier": "doogu/prettier.json",
   "release": {
     "extends": "doogu/release.config.js"
-  },
-  "dependencies": {}
+  }
 }
