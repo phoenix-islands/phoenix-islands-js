@@ -49,6 +49,15 @@ defmodule ExampleWeb do
     end
   end
 
+  def live_view_embedded do
+    quote do
+      use Phoenix.LiveView,
+        layout: {ExampleWeb.Layouts, :embedded}
+
+      unquote(html_helpers())
+    end
+  end
+
   def live_view do
     quote do
       use Phoenix.LiveView,
