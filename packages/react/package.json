@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/react",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "publishConfig": {
     "access": "public"
   },
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@nanostores/react": "^0.7.1",
-    "@phoenix-islands/core": "^0.2.0-alpha.0"
+    "@phoenix-islands/core": "^0.2.0-alpha.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.47",
