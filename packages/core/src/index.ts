@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BaseDeepMap, deepMap, DeepMapStore } from 'nanostores'
 
-import { GlobalData } from './global-data'
+import { GlobalData } from './data'
 
 import type { ViewHook } from 'phoenix_live_view'
 const settings = { debug: false }
@@ -17,11 +17,16 @@ export const debug = (...args: any[]) => {
   }
 }
 
-export type Config = { childrenPassingMode?: 'sync' }
+export type Config = {
+  childrenPassingMode?: 'sync'
+  tunnel?: boolean | string[]
+}
+
 export type IslandProps<T extends BaseDeepMap, C = string> = {
   children: C | undefined
   store: DeepMapStore<T>
   globalStore: DeepMapStore<Partial<GlobalData>>
+  proxyStore: DeepMapStore<Partial<GlobalData>>
 } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
 
 export const ATTRIBUTES = {
@@ -38,6 +43,8 @@ export const CLASSES = {
 } as const
 
 const WINDOW_GLOBAL_STORE_KEY = '$phxIslandsStore'
+const WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE = '$phxIslandsStoreUnsubscribe'
+export const WINDOW_GLOBAL_PROXY_STORE_KEY = '$phxIslandsProxyStore'
 
 const CLASS_QUERIES = Object.fromEntries(
   Object.entries(CLASSES).map(([k, v]) => [k, `.${v}`])
@@ -55,10 +62,26 @@ export const registerIslands = <C, Root = any>(
 ) => {
   ;(window as any)[WINDOW_GLOBAL_STORE_KEY] =
     (window as any)[WINDOW_GLOBAL_STORE_KEY] ?? deepMap({})
+  ;(window as any)[WINDOW_GLOBAL_PROXY_STORE_KEY] =
+    (window as any)[WINDOW_GLOBAL_PROXY_STORE_KEY] ?? deepMap({})
 
   debug((window as any)[WINDOW_GLOBAL_STORE_KEY])
 
   return (components: Record<string, C>, config?: Config) => {
+    const globalStore = (window as any)[
+      WINDOW_GLOBAL_STORE_KEY
+    ] as DeepMapStore<any>
+    if (
+      config?.tunnel &&
+      !(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] &&
+      window.top
+    ) {
+      ;(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] =
+        globalStore.subscribe(data => {
+          window.top?.postMessage({ type: 'phx_island_tunnel_updated', data })
+        })
+    }
+
     const viewHook = {} as ViewHook & {
       $store: DeepMapStore<any>
       component: string | null
@@ -246,6 +269,7 @@ export const registerIslands = <C, Root = any>(
           handleEvent: this.handleEvent,
           store: this.$store,
           globalStore: (window as any)[WINDOW_GLOBAL_STORE_KEY],
+          proxyStore: (window as any)[WINDOW_GLOBAL_PROXY_STORE_KEY],
           children
         })
         this.children = children ?? ''

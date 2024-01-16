@@ -22,7 +22,8 @@
     "coverage": "npm run coverage --workspaces --if-present",
     "types": "npm run types --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "format": "npm run format --workspaces --if-present"
+    "format": "npm run format --workspaces --if-present",
+    "publish-all": "npm run lint && npm run build && npm publish --workspaces --if-present"
   },
   "devDependencies": {
     "doogu": "^3.2.10",

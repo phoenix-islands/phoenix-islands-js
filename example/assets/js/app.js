@@ -2,16 +2,17 @@
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
-import "phoenix_html";
+import 'phoenix_html';
 
-import { registerDataIslands } from "@phoenix-islands/data";
-import { registerReactIslands } from "@phoenix-islands/react";
-import { Socket } from "phoenix";
-import { LiveSocket } from "phoenix_live_view";
+import { registerDataIslands } from '@phoenix-islands/data';
+import { ProxyIsland } from '@phoenix-islands/proxy';
+import { registerReactIslands } from '@phoenix-islands/react';
+import { Socket } from 'phoenix';
+import { LiveSocket } from 'phoenix_live_view';
 
-import topbar from "../vendor/topbar";
-import { ReactCounter } from "./react/ReactCounter";
-import { ReactSharedCounter } from "./react/ReactSharedCounter";
+import topbar from '../vendor/topbar';
+import { ReactCounter } from './react/ReactCounter';
+import { ReactSharedCounter } from './react/ReactSharedCounter';
 
 // You can include dependencies in two ways.
 //
@@ -32,6 +33,9 @@ import { ReactSharedCounter } from "./react/ReactSharedCounter";
 const csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
+
+const proxy = new ProxyIsland("#continent");
+
 const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
@@ -39,15 +43,12 @@ const liveSocket = new LiveSocket("/live", Socket, {
     ...registerDataIslands({
       Logger: {
         subscribe(store, globalStore) {
-          const u1 = store.subscribe(console.log);
-          const u2 = globalStore.subscribe(console.log);
-          return () => {
-            u1();
-            u2();
-          };
+          return globalStore.subscribe((data) => {
+            console.log(data);
+          });
         },
       },
-    }),
+    }, { tunnel: true }),
   },
 });
 
@@ -58,6 +59,8 @@ window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
 
 // connect if there are any LiveViews on the page
 liveSocket.connect();
+liveSocket.enableDebug();
+liveSocket.enableProfiling();
 
 // expose liveSocket on window for web console debug logs and latency simulation:
 // >> liveSocket.enableDebug()
