@@ -32,21 +32,6 @@
     "changelog.md",
     "readme.md"
   ],
-  "peerDependencies": {
-    "@phoenix-islands/core": ">=0.1.31",
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    },
-    "@types/react-dom": {
-      "optional": true
-    }
-  },
   "scripts": {
     "start": "vite",
     "dev": "vite build --watch",
