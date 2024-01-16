@@ -38,6 +38,6 @@ hook.pushEvent = () => null
 hook.mounted?.bind(hook)()
 setInterval(() => {
   document.querySelector('.phx-island_children .text')!.innerHTML =
-  Math.random().toString()
+    Math.random().toString()
   hook.updated?.bind(hook)()
 }, 2000)
