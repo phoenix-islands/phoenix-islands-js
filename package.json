@@ -22,7 +22,7 @@
     "coverage:all": "nx run-many -t coverage",
     "lint:all": "nx run-many -t lint",
     "format:all": "nx run-many -t format",
-    "publish:all": "lerna publish --no-private"
+    "publish:all": "npm run build:all && lerna publish --no-private"
   },
   "devDependencies": {
     "doogu": "^3.2.10",
