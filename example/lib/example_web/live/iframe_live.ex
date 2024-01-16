@@ -22,6 +22,8 @@ defmodule ExampleWeb.IFrameIslandsLive do
           </div>
         </.island>
 
+        <div class="hidden" />
+
         <.island id="2" type={:react} component="ReactSharedCounter">
           <div class="w-full flex flex-row gap-3 items-center justify-between">
             <span>Server State: <%= @counter %></span>
