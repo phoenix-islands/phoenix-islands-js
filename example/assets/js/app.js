@@ -13,6 +13,7 @@ import { LiveSocket } from 'phoenix_live_view';
 import topbar from '../vendor/topbar';
 import { ReactCounter } from './react/ReactCounter';
 import { ReactSharedCounter } from './react/ReactSharedCounter';
+import { ReactProxyCounter } from './react/ReactProxyCounter';
 
 // You can include dependencies in two ways.
 //
@@ -36,16 +37,17 @@ const csrfToken = document
 
 const proxy = new ProxyIsland("#continent");
 
+
 const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
-    ...registerReactIslands({ ReactCounter, ReactSharedCounter }),
+    ...registerReactIslands({ ReactCounter, ReactSharedCounter, ReactProxyCounter }),
     ...registerDataIslands({
       Logger: {
         subscribe(store, globalStore) {
-          return globalStore.subscribe((data) => {
-            console.log(data);
-          });
+          // return globalStore.subscribe((data) => {
+          //   console.log(data);
+          // });
         },
       },
     }, { tunnel: true }),
@@ -59,8 +61,8 @@ window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
 
 // connect if there are any LiveViews on the page
 liveSocket.connect();
-liveSocket.enableDebug();
-liveSocket.enableProfiling();
+// liveSocket.enableDebug();
+// liveSocket.enableProfiling();
 
 // expose liveSocket on window for web console debug logs and latency simulation:
 // >> liveSocket.enableDebug()

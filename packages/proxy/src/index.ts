@@ -5,7 +5,7 @@ import { deepMap, DeepMapStore } from 'nanostores'
 const origin = 'http://localhost:4000'
 
 export class ProxyIsland extends EventTarget {
-  iframe: Element | null
+  iframe: HTMLIFrameElement | null
   store: DeepMapStore<ProxyData>
   constructor(query: string, allowedOrigin?: string) {
     super()
@@ -16,6 +16,7 @@ export class ProxyIsland extends EventTarget {
       (window as any)[WINDOW_GLOBAL_PROXY_STORE_KEY] ?? deepMap({})
     const listener = (e: MessageEvent) => {
       if (
+        e.source == this.iframe?.contentWindow &&
         e.data.type === 'phx_island_tunnel_updated' &&
         e.origin === (allowedOrigin ?? origin)
       ) {
