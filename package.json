@@ -16,20 +16,20 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
-    "test": "npm test --workspaces --if-present",
-    "coverage": "npm run coverage --workspaces --if-present",
-    "types": "npm run types --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "format": "npm run format --workspaces --if-present",
-    "publish-all": "npm run lint && npm run build && npm publish --workspaces --if-present"
+    "dev:all": "nx run-many -t dev",
+    "build:all": "nx run-many -t build",
+    "test:all": "nx run-many -t test",
+    "coverage:all": "nx run-many -t coverage",
+    "lint:all": "nx run-many -t lint",
+    "format:all": "nx run-many -t format",
+    "publish:all": "lerna publish --no-private"
   },
   "devDependencies": {
     "doogu": "^3.2.10",
     "lerna": "^8.0.2",
     "vite-plugin-cachedir": "^1.1.1",
-    "vite-plugin-dts": "^3.7.0"
+    "vite-plugin-dts": "^3.7.0",
+    "nx": "17.2.8"
   },
   "config": {
     "commitizen": {

@@ -83,14 +83,14 @@ export const registerIslands = <C, Root = any>(
         window.top?.postMessage({ type: 'phx_island_tunnel_updated', data })
       })
 
-      const handler = (e: MessageEvent) => {
-        switch (e.data.method) {
-          case 'pushEvent':
-            this?.pushEventTo(...e.data.args)
-          case 'pushEvent':
-            this?.pushEventTo(...e.data.args)
-        }
-      }
+      // const handler = (e: MessageEvent) => {
+      //   switch (e.data.method) {
+      //     case 'pushEvent':
+      //       this?.pushEvent(...e.data.args)
+      //     case 'pushEventTo':
+      //       this?.pushEventTo(...e.data.args)
+      //   }
+      // }
 
       ;(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] = () => {
         unsubscribeGlobalStore()
