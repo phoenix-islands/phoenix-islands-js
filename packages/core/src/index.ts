@@ -2,6 +2,7 @@
 import { BaseDeepMap, deepMap, DeepMapStore } from 'nanostores'
 
 import { GlobalData } from './data'
+export type { IslandData } from './data'
 
 import type { ViewHook } from 'phoenix_live_view'
 const settings = { debug: false }

@@ -16,7 +16,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:all": "nx run-many -t dev",
+    "dev:all": "nx watch --all --includeDependentProjects -- nx run \\$NX_PROJECT_NAME:build",
     "build:all": "nx run-many -t build",
     "build:core": "nx build @phoenix-islands/core",
     "build:react": "nx build @phoenix-islands/react",
