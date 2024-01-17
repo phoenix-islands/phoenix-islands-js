@@ -29,7 +29,10 @@
     "publish:all": "npm run build:all && lerna publish --no-private"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "doogu": "^3.2.10",
+    "husky": "^8.0.3",
     "lerna": "^8.0.2",
     "nx": "17.2.8"
   },
