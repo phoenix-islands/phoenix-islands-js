@@ -1,4 +1,5 @@
 import { BaseDeepMap } from 'nanostores'
 
-export interface GlobalData extends BaseDeepMap {}
-export interface ProxyData extends BaseDeepMap {}
+export type IslandData = BaseDeepMap
+export interface GlobalData extends IslandData {}
+export interface ProxyData extends IslandData {}

@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/data",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.1.31",
+  "version": "0.2.0-alpha.3",
   "publishConfig": {
     "access": "public"
   },
@@ -32,21 +32,6 @@
     "changelog.md",
     "readme.md"
   ],
-  "peerDependencies": {
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "@phoenix-islands/core": ">=0.1.31"
-  },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    },
-    "@types/react-dom": {
-      "optional": true
-    }
-  },
   "scripts": {
     "start": "vite",
     "dev": "vite build --watch",
@@ -57,7 +42,6 @@
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
   "dependencies": {
-    "@phoenix-islands/core": "^0.1.31"
-  },
-  "devDependencies": {}
+    "@phoenix-islands/core": "^0.2.0-alpha.3"
+  }
 }

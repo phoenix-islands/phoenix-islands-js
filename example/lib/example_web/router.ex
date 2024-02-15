@@ -19,7 +19,8 @@ defmodule ExampleWeb.Router do
 
     get("/", PageController, :home)
     live("/islands", IslandsLive)
-    live("/iframe", IFrameIslandsLive)
+    get("/embedded", PageController, :embedded)
+    live("/embedded_live", EmbeddedLive)
   end
 
   # Other scopes may use custom stacks.

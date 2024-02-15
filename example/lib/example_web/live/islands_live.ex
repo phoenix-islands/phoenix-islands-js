@@ -4,12 +4,18 @@ defmodule ExampleWeb.IslandsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="px-4 py-10 sm:px-6 sm:py-28 lg:px-8 xl:px-28 xl:py-32">
-      <div class="mx-auto max-w-xl lg:mx-0 flex flex-col gap-4">
+    <div class="px-4 py-10 sm:px-6">
+      <div class="max-w-xl flex flex-col gap-4">
         <p class="text-[1.2rem] mt-4 font-semibold leading-10 tracking-tighter text-zinc-900">
-          Live View React Island
+          Live View
         </p>
-        <.island id="1" type={:react} component="ReactCounter" data={%{"counter" => @counter}}>
+        <.island
+          id="1"
+          type={:react}
+          live_data
+          component="ReactCounter"
+          data={%{"counter" => @counter}}
+        >
           <div class="w-full flex flex-row gap-3 items-center justify-between">
             <span>Server State: <%= @counter %></span>
             <button
@@ -22,7 +28,7 @@ defmodule ExampleWeb.IslandsLive do
           </div>
         </.island>
 
-        <.island id="2" type={:react} component="ReactSharedCounter">
+        <.island id="2" type={:react} live_data component="ReactSharedCounter">
           <div class="w-full flex flex-row gap-3 items-center justify-between">
             <span>Server State: <%= @counter %></span>
             <button
@@ -34,7 +40,14 @@ defmodule ExampleWeb.IslandsLive do
             </button>
           </div>
         </.island>
-        <.island id="3" type={:data}  data={%{"counter" => @counter}} component="Logger" global_store_key="counterData" />
+        <.island
+          id="3"
+          type={:data}
+          live_data
+          data={%{"counter" => @counter}}
+          component="Logger"
+          global_store_key="counterData"
+        />
       </div>
     </div>
     """

@@ -1,7 +1,7 @@
 {
   "name": "@phoenix-islands/proxy",
   "description": "A library for creating islands of various frontend frameworks in Phoenix LiveView.",
-  "version": "0.1.31",
+  "version": "0.2.0-alpha.3",
   "publishConfig": {
     "access": "public"
   },
@@ -38,10 +38,6 @@
     "lint": "tsc --noEmit && eslint . --cache --cache-location ../../node_modules/.eslint",
     "format": "prettier . --write --cache-location ../../node_modules/.prettier --ignore-path ../../.prettierignore"
   },
-  "peerDependencies": {
-    "nanostores": "^0.9.5",
-    "@phoenix-islands/core": ">=0.1.31"
-  },
   "devDependencies": {
     "@types/phoenix_live_view": "^0.18.4",
     "morphdom": "^2.7.1",
@@ -49,7 +45,7 @@
     "vite-plugin-dts": "^3.7.0"
   },
   "dependencies": {
-    "@phoenix-islands/core": ">=0.1.31",
+    "@phoenix-islands/core": "^0.2.0-alpha.3",
     "nanostores": "^0.9.5"
   }
 }

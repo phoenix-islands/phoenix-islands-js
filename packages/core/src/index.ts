@@ -2,6 +2,7 @@
 import { BaseDeepMap, deepMap, DeepMapStore } from 'nanostores'
 
 import { GlobalData } from './data'
+export type { IslandData } from './data'
 
 import type { ViewHook } from 'phoenix_live_view'
 const settings = { debug: false }
@@ -20,6 +21,7 @@ export const debug = (...args: any[]) => {
 export type Config = {
   childrenPassingMode?: 'sync'
   tunnel?: boolean | string[]
+  proxy?: Pick<ViewHook, 'pushEvent' | 'pushEventTo'>
 }
 
 export type IslandProps<T extends BaseDeepMap, C = string> = {
@@ -27,6 +29,8 @@ export type IslandProps<T extends BaseDeepMap, C = string> = {
   store: DeepMapStore<T>
   globalStore: DeepMapStore<Partial<GlobalData>>
   proxyStore: DeepMapStore<Partial<GlobalData>>
+  pushEventProxied?: ViewHook['pushEvent']
+  pushEventToProxied?: ViewHook['pushEventTo']
 } & Pick<ViewHook, 'pushEvent' | 'pushEventTo' | 'handleEvent'>
 
 export const ATTRIBUTES = {
@@ -76,10 +80,22 @@ export const registerIslands = <C, Root = any>(
       !(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] &&
       window.top
     ) {
-      ;(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] =
-        globalStore.subscribe(data => {
-          window.top?.postMessage({ type: 'phx_island_tunnel_updated', data })
-        })
+      const unsubscribeGlobalStore = globalStore.subscribe(data => {
+        window.top?.postMessage({ type: 'phx_island_tunnel_updated', data })
+      })
+
+      // const handler = (e: MessageEvent) => {
+      //   switch (e.data.method) {
+      //     case 'pushEvent':
+      //       this?.pushEvent(...e.data.args)
+      //     case 'pushEventTo':
+      //       this?.pushEventTo(...e.data.args)
+      //   }
+      // }
+
+      ;(window as any)[WINDOW_GLOBAL_STORE_KEY_TUNNEL_UNSUBSCRIBE] = () => {
+        unsubscribeGlobalStore()
+      }
     }
 
     const viewHook = {} as ViewHook & {
@@ -270,6 +286,8 @@ export const registerIslands = <C, Root = any>(
           store: this.$store,
           globalStore: (window as any)[WINDOW_GLOBAL_STORE_KEY],
           proxyStore: (window as any)[WINDOW_GLOBAL_PROXY_STORE_KEY],
+          pushEventProxied: config?.proxy?.pushEvent,
+          pushEventToProxied: config?.proxy?.pushEventTo,
           children
         })
         this.children = children ?? ''

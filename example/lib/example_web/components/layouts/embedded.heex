@@ -4,6 +4,6 @@
   }
 </style>
 <main>
-  <.flash_group flash={@flash} />
+  <.flash_group flash={@flash} id={@socket.id <> ":flash" } />
   <%= @inner_content %>
 </main>

@@ -150,7 +150,7 @@ defmodule ExampleWeb.CoreComponents do
       <.flash kind={:info} title="Success!" flash={@flash} />
       <.flash kind={:error} title="Error!" flash={@flash} />
       <.flash
-        id="client-error"
+        id={@id <> "client-error"}
         kind={:error}
         title="We can't find the internet"
         phx-disconnected={show(".phx-client-error #client-error")}
@@ -161,7 +161,7 @@ defmodule ExampleWeb.CoreComponents do
       </.flash>
 
       <.flash
-        id="server-error"
+        id={@id <> "server-error"}
         kind={:error}
         title="Something went wrong!"
         phx-disconnected={show(".phx-server-error #server-error")}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/nx-schema.json",
+  "extends": "nx/presets/npm.json",
+  "targetDefaults": {
+    "test": {
+      "cache": true
+    },
+    "format": {
+      "cache": true
+    },
+    "build": {
+      "cache": true
+    },
+    "coverage": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  }
+}

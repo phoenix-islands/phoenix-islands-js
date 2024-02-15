@@ -13,6 +13,8 @@
         "morphdom",
         "nanostores",
         "noreply",
+        "Proxied",
+        "tailwindcss",
         "topbar",
         "tspaths"
     ],
