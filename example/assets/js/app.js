@@ -41,7 +41,7 @@ const proxy = new ProxyIsland("#continent");
 const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: {
-    ...registerReactIslands({ ReactCounter, ReactSharedCounter, ReactProxyCounter }),
+    ...registerReactIslands({ ReactCounter, ReactSharedCounter, ReactProxyCounter }, { proxy }),
     ...registerDataIslands({
       Logger: {
         subscribe(store, globalStore) {

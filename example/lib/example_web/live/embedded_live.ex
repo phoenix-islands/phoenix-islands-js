@@ -10,7 +10,7 @@ defmodule ExampleWeb.EmbeddedLive do
           Live rendered view
         </p>
 
-        <.island id="2" live_data type={:react} component="ReactSharedCounter">
+        <.island id={@socket.id <> "2"} live_data type={:react} component="ReactSharedCounter">
           <div class="w-full flex flex-row gap-3 items-center justify-between">
             <span>Server State: <%= @counter %></span>
             <button
@@ -23,7 +23,7 @@ defmodule ExampleWeb.EmbeddedLive do
           </div>
         </.island>
         <.island
-          id="3"
+          id={@socket.id <> "3"}
           live_data
           type={:data}
           data={%{"counter" => @counter}}
